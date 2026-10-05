@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Simple derivative and indefinite integral practice.">
+    <title>Calculus practice</title>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Calculus practice</h1>
+        <div class="session">
+          <span id="score" aria-live="polite">0 / 0 correct</span>
+          <button id="reset" class="quiet" type="button">Reset</button>
+        </div>
+      </header>
+
+      <div class="modes" role="group" aria-label="Practice mode">
+        <button type="button" data-mode="derivatives" aria-pressed="true">Derivatives</button>
+        <button type="button" data-mode="integration" aria-pressed="false">Integration</button>
+        <button type="button" data-mode="mixed" aria-pressed="false">Mixed</button>
+      </div>
+
+      <section class="problem" aria-labelledby="question-label">
+        <p id="question-label">Find the derivative.</p>
+        <div id="question"></div>
+      </section>
+
+      <form id="answer-form" novalidate>
+        <label for="answer">Your answer</label>
+        <div class="answer-row">
+          <input id="answer" name="answer" type="text" maxlength="160" autocomplete="off"
+            autocapitalize="off" spellcheck="false" aria-describedby="input-hint input-error">
+          <span id="integral-constant" hidden aria-label="plus the constant of integration"></span>
+        </div>
+        <p id="input-hint" class="hint">Use x^2 for powers, sin(x), cos(x), or e^x.</p>
+        <p id="input-error" class="input-error" role="alert" hidden></p>
+        <div class="actions">
+          <button id="check" class="primary" type="submit">Check</button>
+          <button id="skip" type="button">Skip</button>
+          <button id="next" class="primary" type="button" hidden>Next</button>
+        </div>
+      </form>
+
+      <section id="feedback" class="feedback" aria-live="polite" aria-atomic="true" hidden>
+        <p id="feedback-title"></p>
+        <p class="answer-caption">Correct answer</p>
+        <div id="correct-answer"></div>
+        <p id="explanation"></p>
+        <div id="rule"></div>
+      </section>
+    </main>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
