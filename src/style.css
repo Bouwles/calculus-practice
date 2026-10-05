@@ -16,7 +16,7 @@ header { margin-bottom: 24px; }
 .session { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
 #score { color: #606873; font-size: 14px; font-variant-numeric: tabular-nums; }
 
-button, input { font: inherit; }
+button { font: inherit; }
 button {
   min-height: 44px;
   padding: 9px 20px;
@@ -28,7 +28,7 @@ button {
 }
 button:hover:not(:disabled) { border-color: #606873; }
 button:disabled { cursor: default; color: #737982; background: #eef0f2; border-color: #d6d8dc; }
-button:focus-visible, input:focus-visible { outline: 2px solid #435c78; outline-offset: 3px; }
+button:focus-visible { outline: 2px solid #435c78; outline-offset: 3px; }
 button.quiet { padding: 8px 0 8px 16px; border-color: transparent; background: transparent; font-size: 14px; }
 .modes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
 .modes button { padding: 9px 6px; }
@@ -38,24 +38,12 @@ button.quiet { padding: 8px 0 8px 16px; border-color: transparent; background: t
 #question-label { color: #606873; margin: 0; font-size: 14px; }
 #question { display: flex; align-items: center; justify-content: center; min-height: 150px; overflow-x: auto; font-size: 1.6rem; }
 #question .katex-display { margin: 24px 0; padding: 0 4px; }
-label { display: block; margin-bottom: 8px; font-size: 15px; }
-.answer-row { display: flex; align-items: center; gap: 16px; }
-input { width: 100%; min-width: 0; min-height: 48px; padding: 10px 12px; color: inherit; background: #fff; border: 1px solid #b8bec5; border-radius: 4px; }
-input:disabled { color: #606873; background: #f2f3f4; }
-input[aria-invalid="true"] { border-color: #9c3333; }
-input::placeholder { color: #767d86; }
-#integral-constant { flex-shrink: 0; padding-right: 4px; font-size: 1.1rem; }
-.hint { margin: 8px 0 0; color: #606873; font-size: 13px; }
-.input-error { margin: 8px 0 0; color: #9c3333; font-size: 14px; }
 .actions { display: flex; gap: 10px; margin-top: 20px; }
 .actions button { min-width: 88px; }
 .primary { color: #fff; background: #25282d; border-color: #25282d; }
 .primary:hover:not(:disabled) { background: #404650; }
 
 .feedback { border-top: 1px solid #d6d8dc; margin-top: 28px; padding-top: 20px; }
-#feedback-title { margin: 0 0 16px; font-weight: 600; }
-.correct { color: #226540; }
-.incorrect { color: #9c3333; }
 .answer-caption { margin: 0 0 6px; color: #606873; font-size: 13px; }
 #correct-answer { font-size: 1.25rem; overflow-x: auto; }
 #explanation { margin: 18px 0 10px; font-size: 14px; max-width: 60ch; }

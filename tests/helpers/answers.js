@@ -1,4 +1,4 @@
-// Exact rational polynomials in x, sin(x), cos(x), and exp(x).
+// Independent test oracle: exact rational polynomials in x, sin(x), cos(x), and exp(x).
 // Input is parsed into an allowlisted syntax tree; it is never executed.
 const ZERO_KEY = '0,0,0,0';
 const MAX_TERMS = 128;

@@ -1,8 +1,14 @@
 # Calculus practice
 
-A small browser practice game with Derivatives, Integration, and Mixed modes. Questions are generated from simple rules: constants, powers, short polynomials, sin(x), cos(x), and e^x. All integrals are indefinite. There is no timer.
+A small browser practice page with Derivatives, Integration, and Mixed modes. Questions are generated from simple rules: constants, powers, short polynomials, sin(x), cos(x), and e^x. All integrals are indefinite. There is no timer.
 
-## Run locally
+## Open the game
+
+Double-click the `index.html` in the project root or open it in your browser. Everything is included in that file: styling, JavaScript, KaTeX, and mathematical fonts. It works offline and can be copied anywhere. No installation or local server is needed to play.
+
+Solve the question mentally, then click **Show answer** to reveal the answer and a short rule explanation. **Next** loads another question; **Skip** moves on without revealing the answer. Mode switches keep the count of answers shown. **Reset** clears the count and keeps the selected mode. Integrals include `+ C` in the revealed answer.
+
+## Develop locally
 
 Install Node.js 22.12 or newer, then run:
 
@@ -11,18 +17,13 @@ npm ci
 npm run dev
 ```
 
-Open the localhost URL shown in the terminal. To build and preview the static production files:
+Open the localhost URL shown in the terminal. Edit `src/index.html`, `src/main.js`, `src/style.css`, or `src/questions.js`. Rebuild the portable page after changes:
 
 ```sh
 npm run build
-npm run preview
 ```
 
-## Use
-
-Choose a mode, type your answer, and press Enter or Check. The result shows the correct answer and a short rule explanation. Next loads another question. Skip loads a new question without counting an attempt. The score covers the current session across modes; Reset clears it and keeps the selected mode. Reloading starts a new session.
-
-Type familiar expressions such as `3x^2`, `x^3/3`, `2(x+1)`, `-sin(x)`, or `e^x`. Spaces, implicit multiplication, fractions, decimals, and `exp(x)` are supported. For integrals, `+ C` is displayed beside the input; enter only the antiderivative. Adding a numeric constant or a trailing `+ C` is also accepted.
+This updates both the root `index.html` and `dist/index.html`. The root page is generated and committed so it can be opened immediately after downloading the repository. To serve the production page locally, use `npm run preview`.
 
 ## Test
 
@@ -32,12 +33,8 @@ npx playwright install chromium
 npm run test:browser
 ```
 
-The unit suite checks mathematical equivalence, invalid input, generated question families, repeat avoidance, and 1,000 questions per mode. Browser tests exercise all modes, keyboard submission, feedback, scoring, skip, reset, and phone/laptop layouts.
+The unit suite verifies hand-calculated answers, generated question families, repeat avoidance, and 1,000 questions per mode using an independent symbolic test helper. Browser tests open the actual root HTML file, exercise every mode, reveal answers by click and keyboard, and check skip/reset and phone/laptop layouts. An offline test copies the HTML to another directory and checks that its styling, math fonts, and controls still work.
 
 ## Implementation
 
-Vanilla JavaScript and CSS, [Vite](https://vite.dev/guide/) for local development/builds, and [KaTeX](https://katex.org/docs/api.html) for notation. Math and fonts are bundled locally; the game needs no server API or CDN at runtime.
-
-`src/questions.js` generates questions and rule explanations. `src/answers.js` uses an allowlisted parser and exact rational symbolic algebra, comparing derivatives directly and checking integrals by differentiating the submitted expression. It never executes input or uses numerical spot checks. Equivalent expanded, factored, and rational expressions in x, sin(x), cos(x), and e^x are supported, including the basic sin²(x) + cos²(x) identity. Function arguments are limited to x and -x; expression size and integer powers are bounded to keep checking immediate. Blank or unsupported syntax can be corrected without counting an attempt.
-
-`src/main.js` handles interaction. Tests use Node's built-in test runner and Playwright.
+Vanilla JavaScript and CSS, [KaTeX](https://katex.org/docs/api.html) for notation, and [Vite](https://vite.dev/guide/build.html#library-mode) for development and bundling. `scripts/build.mjs` embeds the bundled script, styles, and fonts into the HTML. `src/questions.js` generates questions, answers, and rule explanations; `src/main.js` handles the reveal interaction. There is no answer input, grading, server API, or CDN dependency.

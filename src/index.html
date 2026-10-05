@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Simple derivative and indefinite integral practice.">
+    <title>Calculus practice</title>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Calculus practice</h1>
+        <div class="session">
+          <span id="score" aria-live="polite">0 answers shown</span>
+          <button id="reset" class="quiet" type="button">Reset</button>
+        </div>
+      </header>
+
+      <div class="modes" role="group" aria-label="Practice mode">
+        <button type="button" data-mode="derivatives" aria-pressed="true">Derivatives</button>
+        <button type="button" data-mode="integration" aria-pressed="false">Integration</button>
+        <button type="button" data-mode="mixed" aria-pressed="false">Mixed</button>
+      </div>
+
+      <section class="problem" aria-labelledby="question-label">
+        <p id="question-label">Find the derivative.</p>
+        <div id="question"></div>
+      </section>
+
+      <div class="actions" role="group" aria-label="Question actions">
+        <button id="show-answer" class="primary" type="button">Show answer</button>
+        <button id="skip" type="button">Skip</button>
+        <button id="next" class="primary" type="button" hidden>Next</button>
+      </div>
+
+      <section id="feedback" class="feedback" aria-live="polite" aria-atomic="true" hidden>
+        <p class="answer-caption">Answer</p>
+        <div id="correct-answer"></div>
+        <p id="explanation"></p>
+        <div id="rule"></div>
+      </section>
+      <noscript>Enable JavaScript to use calculus practice.</noscript>
+    </main>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
