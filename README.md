@@ -22,18 +22,19 @@
 
 ## What it covers
 
-Coefficients are small whole numbers, up to ±5 (constants go up to ±6). All integrals are indefinite and include `+ C` in the answer.
+Questions need a little thought while keeping the arithmetic mental: two or three short terms, or one small chain-rule step. Coefficients stay small (up to ±4), and inner multipliers are just 2 or 3. All integrals are indefinite and include `+ C` in the answer.
 
 | Question type | Example | Derivative rule | Integral rule |
 | --- | --- | --- | --- |
-| Constant | $4$ | $\frac{d}{dx}a = 0$ | $\int a\,dx = ax + C$ |
-| Power | $-3x^4$ | $\frac{d}{dx}(ax^n) = anx^{n-1}$ | $\int ax^n\,dx = \frac{a}{n+1}x^{n+1} + C$ |
-| Polynomial (2–3 terms) | $x^3 - 2x^2 + 4x$ | Power rule, term by term | Power rule, term by term |
-| Sine | $2\sin(x)$ | $\frac{d}{dx}\sin(x) = \cos(x)$ | $\int \sin(x)\,dx = -\cos(x) + C$ |
-| Cosine | $-\cos(x)$ | $\frac{d}{dx}\cos(x) = -\sin(x)$ | $\int \cos(x)\,dx = \sin(x) + C$ |
-| Exponential | $5e^x$ | $\frac{d}{dx}e^x = e^x$ | $\int e^x\,dx = e^x + C$ |
+| Polynomial (2–3 terms) | $x^3 - 2x^2 + 4$ | Power rule, term by term | Power rule, term by term |
+| Combined rules | $x^2 + \sin(x)$ | Combine the power and trig rules | Combine the power and trig rules |
+| Shifted power | $(2x + 1)^3$ | Chain rule: multiply by the inner derivative | — |
+| Scaled sine/cosine | $3\cos(2x)$ | Chain rule, including the sign and inner multiplier | — |
+| Exponential | $e^{3x}$ | Chain rule for the inner multiplier | Unscaled $e^x$ appears in sums |
+| Reciprocal powers | $2/x^2 + x$ | Rewrite as negative powers, then differentiate | Rewrite as negative powers, then integrate |
+| Trig/exponential sums | $\sin(x) + e^x$ | — | Apply the basic rule to each term |
 
-Powers go up to $x^4$ in derivative questions and $x^3$ in integral questions.
+Positive powers go up to $x^4$ in derivative questions and $x^3$ in integral questions. Reciprocal integrals use $1/x^2$ or $1/x^3$ so no logarithms are needed. Integrals avoid substitution and integration by parts.
 
 ## How to play
 
@@ -69,7 +70,7 @@ npx playwright install chromium
 npm run test:browser           # browser tests (desktop + phone)
 ```
 
-- **Unit tests** check hand-calculated answers and every question family. They also confirm that questions don't repeat, and they verify 1,000 generated questions per mode against an independent symbolic checker.
+- **Unit tests** check hand-calculated answers, difficulty limits, and every question family. They also confirm that questions don't repeat and check 1,000 generated questions per mode using independent numerical differentiation at several sample points.
 - **Browser tests** open the actual built page in Playwright and run through every mode, revealing answers by mouse and keyboard. They test Skip and Reset and check the layout on phone and laptop sizes. One test copies the page to another folder to make sure the styles, fonts, and controls still work offline.
 
 ### Project layout
@@ -84,7 +85,7 @@ src/
 scripts/build.mjs        Bundles with Vite and inlines the JS, CSS, and fonts into index.html
 tests/
   calculus.test.js       Unit tests (node --test)
-  helpers/answers.js     Independent symbolic checker used by the tests
+  helpers/answers.js     Independent symbolic/numeric test helpers
   browser/game.spec.js   Playwright tests
 ```
 

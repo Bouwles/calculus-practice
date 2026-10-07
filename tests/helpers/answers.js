@@ -222,3 +222,23 @@ export function checkAnswer(input, question) {
     return { correct: false, error: error.message };
   }
 }
+
+// A separate numeric oracle lets generation tests check scaled function arguments
+// without sharing the generator's differentiation/integration implementation.
+export function evaluateExpression(input, x) {
+  function evaluate(node) {
+    if (node.type === 'number') return Number(node.value);
+    if (node.type === 'x') return x;
+    if (node.type === 'e') return Math.E;
+    if (node.type === 'unary') return (node.sign === '-' ? -1 : 1) * evaluate(node.value);
+    if (['sin', 'cos', 'exp'].includes(node.type)) return Math[node.type](evaluate(node.argument));
+    const left = evaluate(node.left), right = evaluate(node.right);
+    if (node.type === '+') return left + right;
+    if (node.type === '-') return left - right;
+    if (node.type === '*') return left * right;
+    if (node.type === '/') return left / right;
+    if (node.type === '^') return left ** right;
+    throw new Error('Unsupported test expression');
+  }
+  return evaluate(parse(input));
+}

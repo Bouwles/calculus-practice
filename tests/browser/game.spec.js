@@ -11,7 +11,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 for (const [mode, answer] of [
-  ['Derivatives', '-4\\sin(x)'], ['Integration', '4\\sin(x) + C'], ['Mixed', '4\\sin(x) + C'],
+  ['Derivatives', '-9\\sin(3x)'], ['Integration', '-\\frac{3}{x} + x^{3} + C'], ['Mixed', '-\\frac{3}{x} + x^{3} + C'],
 ]) {
   test(`${mode}: reveal the answer and rule, then load another question`, async ({ page }) => {
     await page.getByRole('button', { name: mode, exact: true }).click();
@@ -102,7 +102,7 @@ test('opening index.html offline loads styling, maths, and working controls', as
 test('a three-term polynomial fits a narrow phone', async ({ page }, testInfo) => {
   await page.setViewportSize({ width: 320, height: 700 });
   await page.addInitScript(() => {
-    const values = [0.4, 0.9, 0.6, 0.99, 0.1, 0.99, 0.99, 0.1, 0, 0.99, 0.1];
+    const values = [0, 0.99, 0.99, 0.9, 0.99, 0.9, 0.99, 0.1, 0.5, 0.9];
     Math.random = () => values.shift() ?? 0.75;
   });
   await page.reload();
@@ -116,3 +116,24 @@ test('a three-term polynomial fits a narrow phone', async ({ page }, testInfo) =
   await page.getByRole('button', { name: 'Show answer', exact: true }).click();
   await page.screenshot({ path: testInfo.outputPath('narrow-polynomial.png'), fullPage: true });
 });
+
+for (const [family, values, answer] of [
+  ['shifted power', [0.45, 0, 0.9, 0, 0, 0.9, 0], '4\\left(2x + 1\\right)'],
+  ['scaled exponential', [0.85, 0, 0, 0], '-2e^{2x}'],
+  ['combined rules', [0.25, 0, 0, 0.9, 0, 0, 0.9], '2x + \\cos(x)'],
+]) {
+  test(`${family} renders with the correct answer and explanation`, async ({ page }, testInfo) => {
+    await page.setViewportSize({ width: 320, height: 700 });
+    await page.addInitScript((values) => {
+      let index = 0;
+      Math.random = () => values[index++] ?? 0;
+    }, values);
+    await page.reload();
+    await expect(page.locator('#question .katex')).toBeVisible();
+    await page.getByRole('button', { name: 'Show answer', exact: true }).click();
+    await expect(page.locator('#correct-answer annotation')).toHaveText(answer);
+    await expect(page.locator('#explanation')).toContainText(family === 'combined rules' ? 'each term' : 'chain rule');
+    await expect(page.locator('#rule .katex')).toBeVisible();
+    await page.screenshot({ path: testInfo.outputPath('question-and-answer.png'), fullPage: true });
+  });
+}
